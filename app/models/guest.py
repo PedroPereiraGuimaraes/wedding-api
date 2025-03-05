@@ -6,6 +6,9 @@ class Dependent(BaseModel):
     age: int = Field(...)
     confirmed: bool = Field(...)
 
+    def to_dict(self):
+        return self.model_dump()
+
 class Guest(BaseModel):
     accountable: str = Field(..., max_length=100)
     token: str = Field(...)
@@ -20,3 +23,9 @@ class Guest(BaseModel):
 
     def __repr__(self):
         return f"Guest({self.accountable}, {self.email}, {len(self.dependents)} dependents)"
+    
+    def to_dict(self):
+        return {
+            **self.model_dump(),
+            "dependents": [dependent.to_dict() for dependent in self.dependents]
+        }

@@ -10,67 +10,64 @@ class GuestDAO:
             search = self.db.collection.find_one({"email": guest.email})
             
             if search:
-                print("Guest already exists.")
-                return False
+                return {"error": "Guest already exists."}, 400
 
             guest_dict = guest.model_dump(exclude_unset=True)
             result = self.db.collection.insert_one(guest_dict)
 
-            return result.acknowledged
+            if result.acknowledged:
+                return {"message": "Guest created successfully."}, 201
+            else:
+                return {"error": "Failed to create guest."}, 500
         except Exception as e:
-            print(f'There was an error when trying to create a new guest: {e}')
-            return None
+            return {"error": f"There was an error when trying to create a new guest: {str(e)}"}, 500
         
     def get(self, token: str):
         try:
             guest_data = self.db.collection.find_one({"token": token})
             
             if guest_data:
-                return Guest(**guest_data) 
+                return Guest(**guest_data).to_dict(), 200
             else:
-                print("Token not exists.")
-                return None
+                return {"error": "Token does not exist."}, 404
         except Exception as e:
-            print(f'There was an error when trying to fetch the guest by token: {e}')
-            return None
+            return {"error": f"There was an error when trying to fetch the guest by token: {str(e)}"}, 500
 
     def update(self, guest: Guest):
         try:
             search = self.db.collection.find_one({"token": guest.token})
 
             if not search:
-                print("Token not exists.")
-                return None
+                return {"error": "Token does not exist."}, 404
 
             guest_dict = guest.model_dump(exclude_unset=True)
-
             self.db.collection.update_one({"token": guest.token}, {"$set": guest_dict})
 
-            return {"message": "Guest updated successfully."}
+            return {"message": "Guest updated successfully."}, 200
         except Exception as e:
-            print(f'There was an error when trying to update the guest: {e}')
-            return None
+            return {"error": f"There was an error when trying to update the guest: {str(e)}"}, 500
         
     def get_confirmed(self):
         try:
-            all_guests_status = []
+            status = []
 
             for guest in self.db.collection.find():
-                all_guests_status.append({
+                status.append({
                     "name": guest.get("accountable"),
                     "age": guest.get("age"),
                     "confirmed": guest.get("confirmed")
                 })
 
                 for dependent in guest.get("dependents", []):
-                    all_guests_status.append({
+                    status.append({
                         "name": dependent.get("name"),
                         "age": dependent.get("age"),
                         "confirmed": dependent.get("confirmed")
                     })
 
-            return all_guests_status
-
+            if status:
+                return status, 200
+            else:
+                return {"message": "No confirmed guests or dependents found."}, 404
         except Exception as e:
-            print(f'There was an error when trying to fetch confirmed guests and dependents: {e}')
-            return None
+            return {"error": f"There was an error when trying to fetch confirmed guests and dependents: {str(e)}"}, 500
