@@ -26,12 +26,13 @@ class GiftDAO:
     def get(self):
         try:
             gift_data = self.db.collection.find()
-            
+
             if gift_data:
                 gifts = [Gift(**gift).to_dict() for gift in gift_data]
                 return gifts, 200
             else:
                 return {"error": "No gifts found."}, 404
-        
+
         except Exception as e:
+            print(f"Error while fetching gifts: {e}")
             return {"error": f"There was an error when trying to fetch the gifts: {str(e)}"}, 500
