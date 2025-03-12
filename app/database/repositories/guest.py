@@ -1,4 +1,4 @@
-from database.connection import Database
+from app.database.connection import Database
 from app.models.guest import Guest
 
 class GuestDAO:
