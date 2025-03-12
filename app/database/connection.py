@@ -1,8 +1,5 @@
 import os
-from dotenv import load_dotenv
 import pymongo
-
-load_dotenv()
 
 class Database:
     def __init__(self, collection):
