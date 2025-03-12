@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import JSONResponse
-from models.guest import *
-from database.repositories.guest import GuestDAO
+from app.models.guest import *
+from app.database.repositories.guest import GuestDAO
 
 router = APIRouter()
 

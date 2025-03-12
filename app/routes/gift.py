@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from models.gift import *
-from database.repositories.gift import GiftDAO
+from app.models.gift import *
+from app.database.repositories.gift import GiftDAO
 
 router = APIRouter()
 

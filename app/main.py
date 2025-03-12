@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routes import guest, gift
+from app.routes import guest, gift
 
 api = FastAPI()
 
