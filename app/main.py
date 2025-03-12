@@ -2,9 +2,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes import guest, gift
 
-api = FastAPI()
+app = FastAPI()
 
-api.add_middleware(
+app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_methods=["*"],
@@ -12,5 +12,5 @@ api.add_middleware(
     allow_credentials=True
 )
 
-api.include_router(guest.router, prefix="/guest", tags=["guest"])
-api.include_router(gift.router, prefix="/gift", tags=["gift"])
+app.include_router(guest.router, prefix="/guest", tags=["guest"])
+app.include_router(gift.router, prefix="/gift", tags=["gift"])
