@@ -1,5 +1,4 @@
-from pydantic import BaseModel, EmailStr, Field
-from typing import List
+from pydantic import BaseModel, Field
 
 class Gift(BaseModel):
     name: str = Field(..., max_length=100)

@@ -1,5 +1,5 @@
 from database.connection import Database
-from models.guest import Guest
+from app.models.guest import Guest
 
 class GuestDAO:
     def __init__(self):

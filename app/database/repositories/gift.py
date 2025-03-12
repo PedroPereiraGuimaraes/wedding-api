@@ -1,5 +1,5 @@
 from database.connection import Database
-from models.gift import Gift
+from app.models.gift import Gift
 
 class GiftDAO:
     def __init__(self):

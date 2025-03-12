@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr, Field
-from typing import List, Optional
+from typing import List
 
 class Dependent(BaseModel):
     name: str = Field(...)
