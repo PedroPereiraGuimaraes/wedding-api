@@ -1,4 +1,4 @@
-fastapi
-pymongo
-uvicorn
-pydantic
+fastapi==0.115.7
+pydantic==2.7.0
+uvicorn==0.22.0
+pymongo==4.5.0

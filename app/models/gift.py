@@ -7,8 +7,8 @@ class Gift(BaseModel):
     link: str = Field(...)
     
     class Config:
-        min_anystr_length = 1
-        anystr_strip_whitespace = True
+        str_min_length = 1
+        str_strip_whitespace = True
 
     def __repr__(self):
         return f"Gift({self.name}, {self.description}, {self.price}, {self.link})"
